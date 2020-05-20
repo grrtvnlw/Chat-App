@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
   socket.on('join', (name) => {
     console.log(`${name} connected`);
     people.push(name);
-    peopleDict[socket.io] = name;
+    peopleDict[socket.id] = name;
     console.log(people)
     socket.emit('chat message', `you have joined the chat. Hi ${name}!`);
     socket.broadcast.emit('chat message', `${name} has joined the chat.`)
