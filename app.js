@@ -30,16 +30,16 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`${peopleDict[socket.io]} disconnected`);
-    socket.broadcast.emit('chat message', `${peopleDict[socket.io]} has left the chat.`);
+    console.log(`${peopleDict[socket.id]} disconnected`);
+    socket.broadcast.emit('chat message', `${peopleDict[socket.id]} has left the chat.`);
   });
 
   socket.on('chat message', (data) => {
     console.log('message:', data);
-    console.log(`${peopleDict[socket.io]} says`, data)
+    console.log(`${peopleDict[socket.id]} says`, data)
     // const yellingMessage = data.toUpperCase();
     socket.emit('chat message', 'message sent.');
-    socket.broadcast.emit('chat message', `${peopleDict[socket.io]} says ${data}`);
+    socket.broadcast.emit('chat message', `${peopleDict[socket.id]} says ${data}`);
   });
 
   socket.on('display', (data) => {
