@@ -1,0 +1,55 @@
+<%- include('partials/page-start') %>
+
+<div class="container vh-100 py-3">
+
+  <div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Chat Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-inline d-flex w-100 justify-content-center">
+            <input type="text" class="form-control w-100 m-1" placeholder="Enter your name to join the sesh" id="name" required>
+            <button type="submit" name="join" id="join" class="btn btn-primary m-1">
+              Join
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card h-100">
+    <div class="card-header">
+      Chat App
+    </div>
+    <div class="d-flex h-100">
+      <div class="m-3">
+        <p class="ml-3">Chat</p>
+      </div>
+      <ul id="messages" class="list-group w-80 flex-grow-1 overflow-auto" style="list-style-type: none;">
+        <!-- Chat messages go here -->
+      </ul>
+      <div class="m-3">
+        <p class="ml-3">Online</p>
+      </div>
+      <ul id="online" class="list-group w-20 flex-grow-1 overflow-auto" style="list-style-type: none;">
+        <!-- Online users go here -->
+      </ul>
+    </div>
+    <div class="card-footer">
+      <form class="chat-form d-flex">
+        <input class="form-control chat-input w-100" id="chat-message" />
+        <button type="submit" class="btn btn-primary">
+          Send
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/page-end') %>
