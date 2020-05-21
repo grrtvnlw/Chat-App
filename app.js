@@ -18,6 +18,12 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/private', (req, res) => {
+  res.render('private', {
+    title: 'Private Chat',
+  });
+});
+
 io.on('connection', (socket) => {
   socket.on('join', (name) => {
     people.push(name);
