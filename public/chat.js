@@ -1,6 +1,7 @@
-// let typing = false;
-// let timeout = undefined;
-// let user;
+let socket = io()
+let user
+let typing=false
+let timeout=undefined
 
 $(window).on('load',function(){
   $('#myModal').modal('show');
@@ -18,7 +19,6 @@ $(document).ready(() => {
   function validateUser() {
     let name = $('#name').val();
     let re = /[A-Z][a-z]*/;
-    let modal = document.querySelector('#myModal')
     if (re.test(name)) {
       $('#myModal').modal('hide');
     };
@@ -27,20 +27,6 @@ $(document).ready(() => {
   $('#join').on('click',function(){
       validateUser();
     });
-
-  $('.chat-form').keypress((e)=>{
-    if(e.which != 13){
-      typing=true
-      socket.emit('typing', {user:user, typing:true})
-      clearTimeout(timeout)
-      timeout=setTimeout(typingTimeout, 3000)
-    }else{
-      clearTimeout(timeout)
-      typingTimeout()
-      //sendMessage() function will be called once the user hits enter
-      sendMessage()
-    }
-  })
 
   $("#join").click(e => {
     e.preventDefault();
@@ -64,6 +50,32 @@ $(document).ready(() => {
     };
   });
 
+  $(".chat-input").keypress((e) => {
+    if (e.which != 13) {
+      typing = true
+      socket.emit('typing', {user:user, typing:true})
+      clearTimeout(timeout)
+      timeout = setTimeout(typingTimeout, 1500)
+    } else {
+      clearTimeout(timeout)
+      typingTimeout()
+    }
+  });
+
+  socket.on('display', (data)=>{
+    if (data.typing == true) {
+      $('.typing').text(`${data.user} is typing...`)
+    }
+    else {
+      $('.typing').text("")
+    }
+    });
+
+  function typingTimeout(){
+    typing = false
+    socket.emit('typing', {user:user, typing:false})
+  }
+
   socket.on('chat message', (message) => {
     const $newChat = $(`<li class="list-group-item">${message}</li>`);
     $('#messages').append($newChat);
@@ -77,13 +89,13 @@ $(document).ready(() => {
     })
   });
 
-  socket.on('emitParticipants', (people) => {
-    console.log('wid')
-    $('#invite').html('');
-    people.forEach((person) => {
-      const $invite = $(`<a class="dropdown-item" href="#">${person} 🌐</a>`);
-      $('#invite').append($invite);
-    })
-  });
+  // socket.on('emitParticipants', (people) => {
+  //   console.log('wid')
+  //   $('#invite').html('');
+  //   people.forEach((person) => {
+  //     const $invite = $(`<a class="dropdown-item" href="#">${person} 🌐</a>`);
+  //     $('#invite').append($invite);
+  //   })
+  // });
 
 });

@@ -37,12 +37,14 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     let offline = peopleDict[socket.id];
-    socket.broadcast.emit('chat message', `${peopleDict[socket.id]} has left the chat.`);
-    let updatedPeople = people.filter(item => {
-      return item != offline;
-    });
-    people = updatedPeople
-    io.emit('emitParticipants', people);
+    if (peopleDict[socket.id] != undefined) {
+      socket.broadcast.emit('chat message', `${peopleDict[socket.id]} has left the chat.`);
+      let updatedPeople = people.filter(item => {
+        return item != offline;
+      });
+      people = updatedPeople
+      io.emit('emitParticipants', people);
+    }
   });
 
   socket.on('chat message', (data) => {
@@ -50,14 +52,14 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('chat message', `${peopleDict[socket.id]} says ${data}`);
   });
 
-  socket.on('display', (data) => {
-    console.log(`${data} on display`)
-    if (data.typing==true)
-      console.log(`${data.user} is typing...`);
-    else
-      console.log('stopped typing');
+  socket.on('typing', (data) => {
+    if (data.typing == true) {
+      data.user = peopleDict[socket.id];
+      io.emit('display', data)
+    } else {
+      io.emit('display', data);
+    }
   })
-
 });
 
 http.listen(PORT, () => {
