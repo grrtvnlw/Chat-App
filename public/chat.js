@@ -1,6 +1,10 @@
-let typing = false;
-let timeout = undefined;
-let user;
+// let typing = false;
+// let timeout = undefined;
+// let user;
+
+$(window).on('load',function(){
+  $('#myModal').modal('show');
+});
 
 $(document).ready(() => {
   const socket = io();
@@ -10,6 +14,20 @@ $(document).ready(() => {
     socket.emit('chat message', value);
     $('.chat-input').val('');
   });
+
+  function validateUser() {
+    let name = $('#name').val();
+    let re = /[A-Z][a-z]*/;
+    let modal = document.querySelector('#myModal')
+    if (re.test(name)) {
+      console.log("hey there")
+      $('#myModal').modal('hide');
+    };
+  };
+
+  $('#join').on('click',function(){
+      validateUser();
+    });
 
   $('.chat-form').keypress((e)=>{
     if(e.which != 13){
