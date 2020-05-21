@@ -29,7 +29,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
+    let offline = peopleDict[socket.id];
     socket.broadcast.emit('chat message', `${peopleDict[socket.id]} has left the chat.`);
+    let updatedPeople = people.filter(item => {
+      return item != offline;
+    });
+    people = updatedPeople
+    io.emit('emitParticipants', people);
   });
 
   socket.on('chat message', (data) => {
