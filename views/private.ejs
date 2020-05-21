@@ -6,6 +6,16 @@
     <div class="card-header d-flex align-items-center">
       <h3>Chat App</h3>
       <button onclick="location.href = '/'" class="btn btn-secondary ml-3 p-1">Main Room</button>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle ml-3 p-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Invite
+        </button>
+        <div class="dropdown-menu" id="invite" aria-labelledby="dropdownMenuButton">
+          <% invites.forEach(person => { %>
+              <a class="dropdown-item" href="#"><%= person %> </a>
+          <% }) %>
+        </div>
+      </div>
     </div>
     <div class="d-flex h-100">
       <div class="m-3">

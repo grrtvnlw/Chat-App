@@ -20,7 +20,6 @@ $(document).ready(() => {
     let re = /[A-Z][a-z]*/;
     let modal = document.querySelector('#myModal')
     if (re.test(name)) {
-      console.log("hey there")
       $('#myModal').modal('hide');
     };
   };
@@ -75,6 +74,15 @@ $(document).ready(() => {
     people.forEach((person) => {
       const $newName = $(`<li class="list-group-item">${person} is online 🌐</li>`);
       $('#online').append($newName);
+    })
+  });
+
+  socket.on('emitParticipants', (people) => {
+    console.log('wid')
+    $('#invite').html('');
+    people.forEach((person) => {
+      const $invite = $(`<a class="dropdown-item" href="#">${person} 🌐</a>`);
+      $('#invite').append($invite);
     })
   });
 

@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 app.get('/private', (req, res) => {
   res.render('private', {
     title: 'Private Chat',
+    invites: people,
   });
 });
 
