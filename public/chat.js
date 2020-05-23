@@ -34,7 +34,7 @@ $(document).ready(() => {
     if (name != "") {
       socket.emit('join', name);
     } else {
-      alert('Enter a name, nameless!');
+      alert('Enter a username.');
     }
   });
 
@@ -45,7 +45,7 @@ $(document).ready(() => {
       if (name != "") {
         socket.emit('join', name);
       } else {
-        alert('Enter a name, nameless!');
+        alert('Enter a username.');
       }
     };
   });

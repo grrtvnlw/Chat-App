@@ -48,8 +48,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat message', (data) => {
-    socket.emit('chat message', 'message sent.');
-    socket.broadcast.emit('chat message', `${peopleDict[socket.id]} says ${data}`);
+    // socket.emit('chat message', 'message sent.');
+    io.emit('chat message', `${peopleDict[socket.id]} says: ${data}`);
   });
 
   socket.on('typing', (data) => {
